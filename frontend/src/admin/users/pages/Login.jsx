@@ -7,7 +7,6 @@ import { AuthContext } from "../../../shared/context/auth-context";
 import { useNavigate } from "react-router-dom";
 import LoadingSpinner from "../../../shared/components/LoadingSpinner";
 import Backdrop from "../../../shared/components/ui-elements/Backdrop";
-
 const Login = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState();
@@ -37,11 +36,16 @@ const Login = () => {
                     password: formState.inputs.password.value,
                 }),
             });
-            const responseData = await response.json();
-            console.log(responseData);
-            auth.login();
-            setIsLoading(false);
-            navigate('/');
+            console.log(response);
+            if (response.status === 200) {
+                const responseData = await response.json();
+                console.log(responseData);
+                auth.login();
+                setIsLoading(false);
+                navigate('/');
+            } else {
+                setIsLoading(false);
+            }
         } catch (error) {
             setError(error.message || 'Some error occured');
             setIsLoading(false);
@@ -77,5 +81,4 @@ const Login = () => {
         </div>
     );
 };
-
 export default Login;
