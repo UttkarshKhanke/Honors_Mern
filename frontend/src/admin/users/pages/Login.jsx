@@ -6,22 +6,24 @@ import { useForm } from "../../../shared/hooks/form-hook";
 import { AuthContext } from "../../../shared/context/auth-context";
 import { useNavigate } from "react-router-dom";
 import LoadingSpinner from "../../../shared/components/LoadingSpinner";
-import Backdrop from "../../../shared/components/ui-elements/Backdrop";
+
 const Login = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState();
     const auth = useContext(AuthContext);
     const navigate = useNavigate();
     const [formState, inputHandler, setFormData] = useForm({
-        email: {
-            value: '',
-            isValid: false,
-        },
-        password: {
-            value: '',
-            isValid: false,
-        },
-    }, false);
+            email: {
+                value: '',
+                isValid: false,
+            },
+            password: {
+                value: '',
+                isValid: false,
+            },
+        }, 
+        false
+    );
     const loginSubmitHandler = async (event) => {
         event.preventDefault();
         setIsLoading(true);
@@ -36,7 +38,6 @@ const Login = () => {
                     password: formState.inputs.password.value,
                 }),
             });
-            console.log(response);
             if (response.status === 200) {
                 const responseData = await response.json();
                 console.log(responseData);
@@ -59,6 +60,8 @@ const Login = () => {
                     label="Email"
                     id="email"
                     element="input"
+                    type="text"
+                    placeholder="Type email here"
                     errorText="Please enter valid email"
                     onInput={inputHandler}
                     validators={[VALIDATOR_REQUIRE(), VALIDATOR_EMAIL()]}
@@ -70,6 +73,7 @@ const Login = () => {
                     id="password"
                     element="input"
                     type="password"
+                    placeholder="Type password here"
                     errorText="Password cannot be blank"
                     onInput={inputHandler}
                     validators={[VALIDATOR_REQUIRE()]}
