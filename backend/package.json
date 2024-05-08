@@ -24,6 +24,5 @@
     },
     "devDependencies": {
       "nodemon": "^3.1.0",
-      "ts-migrate-mongoose": "^3.6.2"
     }
   }
